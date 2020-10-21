@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/storage": "^0.3.43",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "firebase": "^7.24.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-file-drop": "^3.1.0",
+    "react-firestore": "^1.0.1",
     "react-scripts": "3.4.4"
   },
   "scripts": {
