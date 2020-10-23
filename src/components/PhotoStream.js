@@ -12,7 +12,8 @@ class PhotoStream extends Component {
         photos : [],
         secret : false, 
         input : '',
-        caption : ''
+        caption : '',
+        showCaption : true 
     }
 
     componentDidMount(){
@@ -26,11 +27,12 @@ class PhotoStream extends Component {
     handlePhotoDrop = (file, event) => {
         const db = firebase.firestore();
         const storage = firebase.storage().ref();
+
         const photoFile = file[0]
         const photoRef = storage.child(file[0].name);
-        const date = new Date()
+
+        const date = Date.now()
         const caption = this.state.caption 
-        console.log(caption, date)
 
         photoRef.put(photoFile).then(function(snapshot) {
             console.log('Uploaded a blob or file!');
@@ -60,8 +62,9 @@ class PhotoStream extends Component {
                 querySnapshot.forEach((doc) => {
                     photoURLS.push(doc.data()) 
                 });
+
                 this.setState({
-                    photos : photoURLS
+                    photos : photoURLS.sort((a,b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
                 })
             })
             .catch(function(error) {
@@ -71,7 +74,7 @@ class PhotoStream extends Component {
 
     renderPhotos = () => {
         return this.state.photos.map((url, idx) => {
-            return <PhotoCard key={idx} url={url}/>
+            return <PhotoCard key={idx} photoData={url}/>
         })
     }
 
@@ -101,27 +104,32 @@ class PhotoStream extends Component {
             <div className='photostream-master'>
                 { this.state.secret ? 
                     <div style={this.state.photoDropStyle}>
-                        <form>
-                            <input className='form-item2' type='text' placeholder='caption' value={this.state.caption} onChange={this.handleCaption}/>
-                        </form>
-
-                        <FileDrop
-                            onDragOver={() => this.setState({photoDropStyle : { border: '5px dotted black', width: 350, height: 100, backgroundColor: '#6495ed', padding: 20, color: 'black', borderRadius: 14 } })}
-                            onDragLeave={() => this.setState({photoDropStyle : { border: '1px solid black', width: 350, height: 100, backgroundColor: '#F0FFF0', padding: 20, color: 'black', borderRadius: 14 } })}
-                            onDrop={(file, event) => this.handlePhotoDrop(file, event)}
-                        >
-                            Drop image!
-                        </FileDrop>
-
+                        { this.state.showCaption ? 
+                            <form>
+                                <input className='form-item2' type='text' placeholder='caption' value={this.state.caption} onChange={this.handleCaption}/>
+                            </form>
+                        :
+                            null 
+                        }
+                        { this.state.caption ? 
+                            <FileDrop
+                                onDragOver={() => this.setState({showCaption : false, photoDropStyle : { border: '5px dotted black', width: 350, height: 100, backgroundColor: '#6495ed', padding: 20, color: 'black', borderRadius: 14 } })}
+                                onDragLeave={() => this.setState({photoDropStyle : { border: '1px solid black', width: 350, height: 100, backgroundColor: '#F0FFF0', padding: 20, color: 'black', borderRadius: 14 } })}
+                                onDrop={(file, event) => this.handlePhotoDrop(file, event)}
+                            >
+                                Drop image!
+                            </FileDrop>
+                        :
+                         null 
+                        }
                     </div>
                 : 
-                <div>
-                    <form className='form' onSubmit={this.checkHandshake}>
-                        <input className='form-item' type='password' placeholder='Secret Handshake' value={this.state.input} onChange={this.setInput}/>
-                        <button className='form-item'type='submit'>Go</button>
-                    </form>
-                </div>
-                
+                    <div>
+                        <form className='form' onSubmit={this.checkHandshake}>
+                            <input className='form-item' type='password' placeholder='Secret Handshake' value={this.state.input} onChange={this.setInput}/>
+                            <button className='form-item'type='submit'>Go</button>
+                        </form>
+                    </div>
                 }
                 <div className='photostream-container'>
                     { this.state.photos ? this.renderPhotos() : null }

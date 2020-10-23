@@ -4,9 +4,11 @@ class PhotoCard extends Component {
     render() {
         return (
             <div className='photostream-card'>
-                <img src={this.props.url.url} alt='stream element' className='photostream-photo'/>
-                <h4> {this.props.url.caption}</h4>
-                {/* <h4> {this.props.url.date}</h4> */}
+                <img src={this.props.photoData.url} alt='stream element' className='photostream-photo'/>
+                <h4> {this.props.photoData.caption}
+                    <br/>
+                     {new Date(this.props.photoData.date).toString().slice(0,15)} 
+                </h4>
             </div>
         );
     }
