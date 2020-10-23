@@ -1,9 +1,47 @@
 .App {
   text-align: center;
+  background-color: darkslategray;
+  color: antiquewhite;
 }
 
 .photostream-photo{
-  height: 400px;
-  width: 300px;
+  width: 350px;
+}
 
+.photostream-card{
+  width: 375px;
+  background-color: salmon;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 14px;
+}
+
+.photostream-master{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form{
+  padding: 20px;
+}
+
+.form-item{
+  padding: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 14px;
+  font-size: large;
+}
+
+.form-item2{
+  padding: 20px;
+  margin: 10px;
+  border-radius: 14px;
+  font-size: large;
+  text-align: center;
 }

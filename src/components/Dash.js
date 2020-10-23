@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Dash extends Component {
     render() {
         return (
-            <div>
-                <h2>hey everyone</h2>
+            <div className='photostream-master'>
+                <h2>hey everyone its my fake insta</h2>
             </div>
         );
     }

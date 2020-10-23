@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './App.css';
 import Dash from './components/Dash'
 import PhotoStream from './components/PhotoStream'
 
 function App() {
   return (
-    <Fragment>
+    <div className='App'>
       <Dash/>
       <PhotoStream/>
-    </Fragment>
+    </div>
   );
 }
 
